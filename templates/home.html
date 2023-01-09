@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Contacts</title>
+</head>
+<body>
+      
+    <div class="well text-center" style>
+        <h1> Contact Web Application </h1>
+    </div>
+
+        <h2>List of <b>Contacts</b><button type="button" class="btn btn-primary float-center" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add New Contact</button></h2>
+        
+<!--Search Bar for names-->
+
+        <div class="sidebar-module sidebar-module-insert">
+          <h4>Search</h4>
+        <form class="fore-inline" method="POST" action="{{url_for("search")}}">
+          <div class="fore-group">
+          
+          <input type="text" class="fore-control" name="search" id="query" placeholder="search">
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+
+        <!-- Add CONTACT -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form action="{{url_for('details')}}" method="POST">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" name="name" class="form-control" id="recipient-name">
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Phone Number:</label>
+            <input type="text" name="ph_no" class="form-control" id="recipient-name">
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Address:</label>
+            <input type="text" name="address" class="form-control" id="recipient-name">
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Email Id:</label>
+            <input type="email" name="for_email" class="form-control" id="recipient-name">
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Company:</label>
+            <input type="text" name="company" class="form-control" id="recipient-name">
+          </div>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit"  class="btn btn-primary">Save Contact</button>
+          </div>
+
+
+        </form>
+      </div>
+  </div>
+</div> 
+</div>
+        
+<div class="container">
+          <table class="table">
+        
+              <thead style="background-color: brown;color: aliceblue;">
+                <th>Name</th>
+                <th>Phone No.</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Company</th>
+                <th>Action</th>
+            
+              </thead>
+            <tbody>
+              
+              {% for j in contact %}
+              <tr>
+              
+              <td>{{j.name}}</td>
+              <td>{{j.number}}</td>
+              <td>{{j.address}}</td>
+              <td>{{j.email_id}}</td>
+              <td>{{j.Company}}</td>
+              <td>
+                <a href="/update_list/{{j.srno}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{j.srno}}">Update</a>
+                <a href="/delete/{{j.srno}}" class="btn btn-danger btn xs" >Delete</a>
+              </td>
+            
+            </tbody>
+         
+          <div>
+
+          <!-- Update  Contact -->
+<div id="modaledit{{j.srno}}" class="modal fade"  role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title text-primary" style="align-content: center;">Update Student Details</h5>    
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+         <div class="modal-body">
+             <form action="{{url_for("c_update")}}" method="POST">
+
+                 <div class="form-group">
+                    <input type="hidden" name="srno" value="{{j.srno}}"
+                     <label for="recipient-name" class="col-form-label">Name:</label>
+                     <input type="text" name="name" class="form-control" id="recipient-name" value="{{j.name}}"/>
+                 </div>
+
+                 <div class="form-group">
+                     <label for="recipient-name" class="col-form-label">Phone Number:</label>
+                     <input type="text" name="ph_no" class="form-control" id="recipient-name" value="{{j.number}}"/>
+                   </div>
+     
+                   <div class="form-group">
+                     <label for="recipient-name" class="col-form-label">Address:</label>
+                     <input type="text" name="address" class="form-control" id="recipient-name" value="{{j.address}}">
+                   </div>
+     
+                   <div class="form-group">
+                     <label for="recipient-name" class="col-form-label">Email Id:</label>
+                     <input type="text" name="for_email" class="form-control" id="recipient-name" value="{{j.email_id}}">
+                   </div>
+     
+                   <div class="form-group">
+                     <label for="recipient-name" class="col-form-label">Company:</label>
+                     <input type="text" name="company" class="form-control" id="recipient-name" value="{{j.Company}}">
+                   </div>
+     
+                   <div class="form-group">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Update</button>
+                   </div>
+             </form>
+         </div>
+
+        </div>
+</div>
+</div>
+
+
+{% endfor %}
+</table>
+ 
+
+</body>
+</html>
